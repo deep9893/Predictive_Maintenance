@@ -5,7 +5,7 @@ from datetime import datetime
 
 LOG_DIR= "logs"
 
-CURRENT_TIME_STEMP= f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
+CURRENT_TIME_STEMP= f"{datetime.now().strftime('%Y-%m-%d %H-%M')}"
 
 log_file_name= f"log{CURRENT_TIME_STEMP}.log"
 

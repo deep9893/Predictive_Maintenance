@@ -1,0 +1,11 @@
+data ingestion
+
+1. config.yml file
+2. config entity file
+3. artifact entity file
+4. constant file
+5. configuration file
+6. data ingestion
+7. utils file
+8. pipeline file
+9. main.py file
