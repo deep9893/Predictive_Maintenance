@@ -5,8 +5,8 @@ from collections import namedtuple
 from datetime import datetime
 import uuid
 from src.components.data_transformation import DataTransformation
-# from src.components.model_evaluation import ModelEvaluation
-# from src.components.model_pusher import ModelPusher
+from src.components.model_evaluation import ModelEvaluation
+from src.components.model_pusher import ModelPusher
 from src.components.model_trainer import ModelTrainer
 from src.config.configuration import Configuartion
 from src.logger import logging
@@ -88,31 +88,30 @@ class Pipeline(Thread):
             raise CustomException(e, sys) from e
 
 
-
-    # def start_model_evaluation(self, data_ingestion_artifact: DataIngestionArtifact,
-    #                            data_validation_artifact: DataValidationArtifact,
-    #                            model_trainer_artifact: ModelTrainerArtifact) -> ModelEvaluationArtifact:
-    #     try:
-    #         model_eval = ModelEvaluation(
-    #             model_evaluation_config=self.config.get_model_evaluation_config(),
-    #             data_ingestion_artifact=data_ingestion_artifact,
-    #             data_validation_artifact=data_validation_artifact,
-    #             model_trainer_artifact=model_trainer_artifact)
-    #         return model_eval.initiate_model_evaluation()
-    #     except Exception as e:
-    #         raise CustomException(e, sys) from e
-
+    def start_model_evaluation(self, data_ingestion_artifact: DataIngestionArtifact,
+                               data_validation_artifact: DataValidationArtifact,
+                               model_trainer_artifact: ModelTrainerArtifact) -> ModelEvaluationArtifact:
+        try:
+            model_eval = ModelEvaluation(
+                model_evaluation_config=self.config.get_model_evaluation_config(),
+                data_ingestion_artifact=data_ingestion_artifact,
+                data_validation_artifact=data_validation_artifact,
+                model_trainer_artifact=model_trainer_artifact)
+            return model_eval.initiate_model_evaluation()
+        except Exception as e:
+            raise CustomException(e, sys) from e
 
 
-    # def start_model_pusher(self, model_eval_artifact: ModelEvaluationArtifact) ->ModelPusherArtifact:
-    #     try:
-    #         model_pusher = ModelPusher(
-    #             model_pusher_config=self.config.get_model_pusher_config(),
-    #             model_evaluation_artifact=model_eval_artifact
-    #         )
-    #         return model_pusher.initiate_model_pusher()
-    #     except Exception as e:
-    #         raise CustomException(e, sys) from e    
+
+    def start_model_pusher(self, model_eval_artifact: ModelEvaluationArtifact) ->ModelPusherArtifact:
+        try:
+            model_pusher = ModelPusher(
+                model_pusher_config=self.config.get_model_pusher_config(),
+                model_evaluation_artifact=model_eval_artifact
+            )
+            return model_pusher.initiate_model_pusher()
+        except Exception as e:
+            raise CustomException(e, sys) from e    
 
     def run_pipeline(self):
         try:
